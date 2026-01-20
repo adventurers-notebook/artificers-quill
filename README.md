@@ -5,5 +5,6 @@ A collection of scripts and instructions to write professionally looking 5e comp
 Before using this script you must have LaTeX and PanDoc installed on you system.
 As a matter of fact the powers of the command line are ruling this process.
 
+Get the style and the images from https://github.com/rpgtex/dnd-5e-latex-template
 
 pandoc adventure.md --lua-filter=dnd_pro.lua --template=dnd-template.tex -o adventure.pdf
