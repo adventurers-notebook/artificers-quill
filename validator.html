@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Occhio Rivelatore - D&D Markdown Checker</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; padding: 20px; color: #333; }
+        h1 { color: #8b0000; }
+        .container { display: flex; gap: 20px; height: 80vh; }
+        .editor, .output { flex: 1; display: flex; flex-direction: column; }
+        textarea { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: 'Courier New', Courier, monospace; resize: none; }
+        #results { flex: 1; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px; overflow-y: auto; }
+        button { margin-top: 10px; padding: 10px 20px; background-color: #8b0000; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background-color: #a50000; }
+        
+        /* Stili messaggi */
+        .msg { margin-bottom: 10px; padding: 10px; border-left: 5px solid; border-radius: 3px; }
+        .error { background-color: #ffe6e6; border-color: #ff4d4d; }
+        .warning { background-color: #fff4e5; border-color: #ffa500; }
+        .success { background-color: #e6ffed; border-color: #2ecc71; }
+        .line-num { font-weight: bold; color: #555; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>👁️ L'Occhio Rivelatore <small style="font-size: 0.5em; color: #666;">Validatore per La Piuma dell'Artefice</small></h1>
+    <p>Incolla qui il tuo Markdown per controllare se ci sono errori prima della conversione.</p>
+
+    <div class="container">
+        <div class="editor">
+            <textarea id="inputMD" placeholder="Incolla qui il tuo testo..."></textarea>
+            <button onclick="checkSyntax()">Invoca Controllo</button>
+        </div>
+        <div class="output">
+            <div id="results"><p style="color:#888; font-style:italic;">I risultati appariranno qui...</p></div>
+        </div>
+    </div>
+
+    <script>
+        function checkSyntax() {
+            const text = document.getElementById('inputMD').value;
+            const lines = text.split('\n');
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+            
+            let errors = 0;
+            let warnings = 0;
+            let openBlocks = []; // Stack per tracciare i ::: aperti
+
+            function addMsg(type, text, lineNum) {
+                const div = document.createElement('div');
+                div.className = `msg ${type}`;
+                div.innerHTML = lineNum ? `<span class="line-num">Riga ${lineNum}:</span> ${text}` : text;
+                results.appendChild(div);
+                if (type === 'error') errors++;
+                if (type === 'warning') warnings++;
+            }
+
+            // 1. Controllo Intestazione YAML
+            if (!text.trim().startsWith('---')) {
+                addMsg('error', "Manca l'intestazione YAML all'inizio (le tre lineette '---'). Il documento deve iniziare con i metadati.", 1);
+            }
+
+            // Scansione riga per riga
+            lines.forEach((line, index) => {
+                const n = index + 1;
+                const trimmed = line.trim();
+
+                // 2. Controllo Blocchi (Divs)
+                if (trimmed.startsWith(':::')) {
+                    // È una chiusura o un'apertura?
+                    // Se la riga è SOLO ":::" o "::: " è una chiusura (o apertura anonima, ma in pandoc spesso chiude)
+                    // Tuttavia, per sicurezza, controlliamo se ha contenuto dopo
+                    const content = trimmed.substring(3).trim();
+                    
+                    if (content === '') {
+                        // È un blocco di chiusura
+                        if (openBlocks.length === 0) {
+                            addMsg('error', "Hai chiuso un blocco ':::' ma non ce n'era nessuno aperto.", n);
+                        } else {
+                            openBlocks.pop();
+                        }
+                    } else {
+                        // È un blocco di apertura (es: ::: monster)
+                        openBlocks.push({type: content, line: n});
+                        
+                        // Controllo specifico Mostri
+                        if (content.startsWith('monster') || content.startsWith('{monster')) {
+                            if (!content.includes('name=')) {
+                                addMsg('warning', "Blocco Mostro senza nome. Usa: <code>::: {monster name=\"Nome Mostro\"}</code>", n);
+                            }
+                        }
+                    }
+                }
+
+                // 3. Controllo Statistiche Mostri (Critico per lo script Lua)
+                // Cerchiamo righe che sembrano statistiche ma sono scritte male
+                // Regex semplice per trovare "STR" seguito da numeri
+                if (trimmed.includes('STR') && trimmed.includes('DEX')) {
+                    // Controlla se la sintassi è quella compatta corretta: STR 10 (+0)
+                    const statPattern = /STR\s+\d+\s+\([+-]?\d+\)/;
+                    if (!statPattern.test(trimmed)) {
+                        addMsg('error', "La riga delle statistiche sembra sbagliata. Deve essere nel formato: <br><code>STR 10 (+0) DEX 12 (+1) ...</code> <br>Attenzione agli spazi e alle parentesi!", n);
+                    }
+                }
+
+                // 4. Controllo Tabelle Markdown
+                if (trimmed.startsWith('|')) {
+                    if (!trimmed.endsWith('|')) {
+                        addMsg('warning', "La riga della tabella non finisce con '|'. Potrebbe causare errori grafici.", n);
+                    }
+                }
+            });
+
+            // 5. Controllo Blocchi rimasti aperti
+            if (openBlocks.length > 0) {
+                openBlocks.forEach(block => {
+                    addMsg('error', `Il blocco <b>${block.type}</b> aperto alla riga ${block.line} non è mai stato chiuso con ':::'.`, block.line);
+                });
+            }
+
+            // Riepilogo finale
+            if (errors === 0 && warnings === 0) {
+                addMsg('success', "✨ Nessun errore rilevato! Il tuo Markdown è pronto per la trasmutazione.");
+            } else {
+                const summary = document.createElement('div');
+                summary.style.fontWeight = 'bold';
+                summary.style.marginTop = '20px';
+                summary.innerText = `Totale: ${errors} Errori, ${warnings} Avvisi.`;
+                results.prepend(summary);
+            }
+        }
+    </script>
+</body>
+</html>
