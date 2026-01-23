@@ -5,7 +5,7 @@ date: "2026-01-20"
 documentclass: article
 geometry: top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm
 header-includes:
- - \usepackage[bg-letter]{dnd} % Carica lo stile D&D con sfondo
+ - \usepackage{dnd} % Carica lo stile D&D con sfondo (l'opzione 'full' è default)
  - \usepackage[utf8]{inputenc}
 ---
 
