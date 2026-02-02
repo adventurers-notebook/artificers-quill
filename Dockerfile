@@ -1,46 +1,39 @@
-# Use an official Debian-based pandoc image.
-# We use pandoc/core and will install TeX Live manually.
-FROM pandoc/core:3.8-debian
+# Use a base image with essential tools
+FROM debian:bullseye-slim
 
-# Set a working directory inside the container
-WORKDIR /data
+# Set frontend to noninteractive to avoid prompts during installation
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Use apt, the Debian package manager.
-# First, update the package lists. Then install git and the necessary TeX Live packages.
-# `texlive-xetex` is needed for the --pdf-engine=xelatex option.
-# `texlive-latex-extra` contains required packages like hanging, tcolorbox, etc.
-# `texlive-fonts-recommended` provides additional font support.
+# Install dependencies: wget, unzip for downloading files, and pandoc.
+# Install a full TeX Live distribution. While large, it guarantees all
+# necessary LaTeX packages and fonts are available.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
-    texlive-xetex \
-    texlive-latex-extra \
-    texlive-fonts-recommended \
-    lmodern \
-    fontconfig \
+    wget \
+    unzip \
+    pandoc \
+    texlive-full \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set the TeX user tree environment variable. This ensures kpsewhich finds our custom files at runtime.
+# --- Install Fonts for the D&D Template ---
+# Create a directory for custom fonts
+RUN mkdir -p /usr/local/share/fonts/truetype/dnd
 
-# Install the dnd-5e-latex-template from GitHub into the user's TEXMF tree.
-# This single RUN command does the following:
-# 1. Creates the target directory for the template.
-# 2. Clones the repository contents directly into it.
-# 3. Copies the fonts to the system font directory.
-# 4. Copies the main template to Pandoc's template directory.
-# 5. Updates the TeX and font caches.
-RUN TEXMFHOME=$(kpsewhich -var-value TEXMFHOME) \
-    git clone https://github.com/rpgtex/DND-5e-LaTeX-Template.git "${TEXMFHOME}/tex/latex/dnd" && \
-    DND_FINAL_PATH="$TEXMFHOME/tex/latex/dnd" && \
-    find "$DND_FINAL_PATH" -name "*.ttf" -o -name "*.otf" -exec cp {} /usr/local/share/fonts/ \; && \
-    mkdir -p /root/.pandoc/templates && \
-    cp "$DND_FINAL_PATH/dnd-template.tex" /root/.pandoc/templates/ && \
-    texhash && fc-cache -fv
+# Download and unzip the fonts from the rpgtex repository
+RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/master/fonts/fonts.zip -O /tmp/fonts.zip && \
+    unzip /tmp/fonts.zip -d /usr/local/share/fonts/truetype/dnd && \
+    rm /tmp/fonts.zip
 
-# Copy the local project files into the container's working directory
-COPY . .
+# Refresh the font cache
+RUN fc-cache -f -v
 
-# Make the build script executable
-RUN chmod +x ./build.sh
+# --- Install D&D 5e LaTeX Template ---
+# Create a directory for the LaTeX style files in the TeX tree
+RUN mkdir -p /usr/share/texmf/tex/latex/dnd5e
 
-# Set the entrypoint to our build script
-ENTRYPOINT ["sh", "./build.sh"]
+# Download the style file and images
+RUN wget https://raw.githubusercontent.com/rpgtex/DND-5e-LaTeX-Template/master/dnd.sty -O /usr/share/texmf/tex/latex/dnd5e/dnd.sty && \
+    wget https://raw.githubusercontent.com/rpgtex/DND-5e-LaTeX-Template/master/backgrounds/PHB-background.png -O /usr/share/texmf/tex/latex/dnd5e/PHB-background.png
+
+# Refresh the TeX file database
+RUN texhash

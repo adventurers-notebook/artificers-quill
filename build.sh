@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pandoc adventure.md \
+pandoc $1 \
   --from markdown+yaml_metadata_block \
   --lua-filter=dnd_pro.lua \
   --pdf-engine=xelatex \
