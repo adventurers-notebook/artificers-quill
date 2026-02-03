@@ -125,12 +125,49 @@ pre, code { background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; fon
     border-bottom: none; /* Rimuoviamo il bordo standard */
 }
 
-/* Le linee rosse affusolate (___ diventa <hr>) */
+/* --- STILE PER LE STATISTICHE DEI MOSTRI --- */
+
+/* Nascondi i bordi della tabella solo dentro al mostro */
+.monster table {
+    border: none;
+    margin: 10px 0;
+    width: 100%;
+}
+
+/* Le intestazioni (STR, DEX...) */
+.monster th {
+    background-color: transparent; /* Niente sfondo scuro */
+    color: #58180D; /* Rosso scuro */
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    font-size: 0.9em;
+    padding: 2px;
+}
+
+/* I valori (+4, -1...) */
+.monster td {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    font-size: 1.1em;
+    color: #58180D;
+    padding: 2px;
+}
+
+/* Linee rosse divisorie (le ___ in markdown) */
 .monster hr {
     border: 0;
     height: 2px;
-    background-image: linear-gradient(to right, transparent, #58180D, transparent);
+    background: linear-gradient(to right, transparent, #58180D, transparent);
     margin: 10px 0;
+    display: block;
+}
+
+/* Stile per le righe tipo "Armor Class" */
+.monster p {
+    margin: 2px 0; /* Riduci spazio tra le righe */
+    line-height: 1.4;
 }
 
 /* Testo delle Statistiche (STR, DEX...) */

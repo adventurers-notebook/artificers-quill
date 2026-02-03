@@ -35,19 +35,27 @@ Se i giocatori sbagliano l'enigma, le rune si staccano dalla porta e formano un 
 
 ::: {.monster name="Golem di Sintassi"}
 *Medium construct, unaligned*
+
 ___
-Hit Points 50 (10d8 + 5)
-Armor Class 16 (natural armor)
-Speed 25 ft.
+
+**Hit Points** 50 (10d8 + 5)  
+**Armor Class** 16 (natural armor)  
+**Speed** 25 ft.
+
 ___
-STR 18 (+4) DEX 9 (-1) CON 16 (+3) INT 3 (-4) WIS 11 (+0) CHA 1 (-5)
+
+| STR | DEX | CON | INT | WIS | CHA |  
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 18 (+4) | 9 (-1) | 16 (+3) |  3 (-4) | 11 (+0) | 1 (-5) |
 ___
-**Damage Immunities** poison, psychic
-**Condition Immunities** charmed, exhaustion, frightened, paralyzed, petrified, poisoned
-**Senses** darkvision 60 ft., passive Perception 10
-**Languages** understands the languages of its creator but can't speak
-**Challenge** 3 (700 XP)
+**Damage Immunities** poison, psychic  
+**Condition Immunities** charmed, exhaustion, frightened, paralyzed, petrified, poisoned  
+**Senses** darkvision 60 ft., passive Perception 10  
+**Languages** understands the languages of its creator but can't speak  
+**Challenge** 3 (700 XP)  
+
 ___
+
 #### Traits
 **Immutable Form.** The golem is immune to any spell or effect that would alter its form.
 
