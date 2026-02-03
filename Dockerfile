@@ -19,10 +19,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create a directory for custom fonts
 RUN mkdir -p /usr/local/share/fonts/truetype/dnd
 
-# Download and unzip the fonts from the rpgtex repository
-#RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/master/fonts/fonts.zip -O /tmp/fonts.zip && \
-#    unzip /tmp/fonts.zip -d /usr/local/share/fonts/truetype/dnd && \
-#    rm /tmp/fonts.zip
+RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/archive/refs/heads/stable.zip && \
+    unzip stable.zip && \
+    mkdir -p "$(kpsewhich -var-value TEXMFHOME)/tex/latex/dnd" && \
+    mv DND-5e-LaTeX-Template-stable "$(kpsewhich -var-value TEXMFHOME)/tex/latex/dnd" && \
+    rm stable.zip
 
 # Refresh the font cache
 RUN fc-cache -f -v
@@ -31,9 +32,13 @@ RUN fc-cache -f -v
 # Create a directory for the LaTeX style files in the TeX tree
 RUN mkdir -p /usr/share/texmf/tex/latex/dnd5e
 
-# Download the style file and images
-RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/refs/heads/stable/dnd.sty -O /usr/share/texmf/tex/latex/dnd5e/dnd.sty && \
-    wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/refs/heads/stable/img/paper.jpg -O /usr/share/texmf/tex/latex/dnd5e/PHB-background.png
-
 # Refresh the TeX file database
 RUN texhash
+
+COPY adventure.md dnd_pro.lua build.sh .
+
+RUN chmod a+x build.sh
+
+ENV TARGET_FILE="adventure.md"
+
+ENTRYPOINT ./build.sh ${TARGET_FILE}
