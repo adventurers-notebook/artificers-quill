@@ -1,25 +1,33 @@
--- Funzione per correggere i link da .md a .html
-function Link(el)
-  if el.target:match("%.md$") then
-    el.target = string.gsub(el.target, "%.md$", ".html")
-  end
-  return el
-end
-
--- Funzione per gestire i Box (Div)
 function Div(el)
-  -- Controlla se il div ha una delle nostre classi speciali
-  if el.classes:includes("readaloud") or el.classes:includes("paperbox") or el.classes:includes("commentbox") then
+  -- Classi che vogliamo gestire
+  local special_classes = {"readaloud", "paperbox", "commentbox", "monster", "spell", "dndtable"}
+  
+  local is_special = false
+  for _, class in ipairs(special_classes) do
+    if el.classes:includes(class) then is_special = true break end
+  end
+
+  if is_special then
+    -- Cerca "title" OPPURE "name"
+    local title_text = el.attributes["title"] or el.attributes["name"]
     
-    -- Cerca se c'è un attributo "title" (es. {title="La Grotta"})
-    if el.attributes["title"] then
-      -- Crea un elemento Header (H3) con il titolo
-      local header = pandoc.Header(3, el.attributes["title"])
-      
-      -- Inserisci il titolo come PRIMO elemento dentro il box
+    if title_text then
+      print(">> Creazione Header per: " .. title_text)
+      -- Usa H3 per i mostri, H4 per gli altri (più piccoli)
+      local level = 3
+      if el.classes:includes("monster") then level = 3 else level = 4 end
+
+      local header = pandoc.Header(level, title_text)
       table.insert(el.content, 1, header)
     end
     
     return el
   end
+end
+
+function Link(el)
+  if el.target:match("%.md$") then
+    el.target = string.gsub(el.target, "%.md$", ".html")
+  end
+  return el
 end

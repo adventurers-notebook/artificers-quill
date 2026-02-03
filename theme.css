@@ -96,3 +96,81 @@ pre, code { background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; fon
     font-size: 1.1em;
     border: none;
 }
+
+/* --- MOSTRI E INCANTESIMI (D&D 5e Style) --- */
+
+/* 1. MONSTER BOX (Stat Block) */
+.monster {
+    background-color: #FDF1DC;
+    border-top: 5px solid #E69A28; /* Bordo oro in alto */
+    border-bottom: 5px solid #E69A28; /* Bordo oro in basso */
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 30px 0;
+    font-family: 'Segoe UI', Helvetica, sans-serif; /* Font pulito per le stat */
+    font-size: 0.9em;
+    color: #58180D; /* Rosso scuro quasi nero */
+    display: block; /* Assicura che prenda spazio */
+    page-break-inside: avoid; /* Evita che si spezzi tra due pagine in stampa */
+}
+
+/* Il nome del Mostro */
+.monster h3 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-variant: small-caps; /* Maiuscoletto elegante */
+    font-weight: bold;
+    font-size: 1.8em;
+    color: #58180D;
+    margin: 0 0 5px 0;
+    border-bottom: none; /* Rimuoviamo il bordo standard */
+}
+
+/* Le linee rosse affusolate (___ diventa <hr>) */
+.monster hr {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, transparent, #58180D, transparent);
+    margin: 10px 0;
+}
+
+/* Testo delle Statistiche (STR, DEX...) */
+.monster strong {
+    color: #58180D;
+}
+
+/* 2. SPELL BOX (Incantesimi) */
+.spell {
+    background-color: #ffffff;
+    border: 1px solid #c9ad6a;
+    padding: 15px;
+    margin: 20px 0;
+    box-shadow: 2px 2px 0px #eee;
+}
+
+.spell h4 {
+    color: #58180D;
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+/* 3. TABELLA DEL BOTTINO (Dndtable) */
+.dndtable table {
+    width: 100%;
+    border-spacing: 0;
+    border: 1px solid #58180D;
+}
+
+.dndtable th {
+    background-color: #58180D;
+    color: #EDC172; /* Oro chiaro */
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 8px;
+}
+
+.dndtable tr:nth-child(even) {
+    background-color: #E0E5C1; /* Alternanza righe verdine */
+}
+.dndtable tr:nth-child(odd) {
+    background-color: #ffffff;
+}
