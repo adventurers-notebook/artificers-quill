@@ -1,3 +1,6 @@
+/* Importazione Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Roboto+Condensed:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+
 /* D&D Beyond-ish Theme */
 body {
     font-family: 'Roboto', 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -7,6 +10,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     background-color: #ffffff;
+    font-size: 16px;
 }
 
 /* Link in rosso scuro */
@@ -14,9 +18,23 @@ a { color: #bc0f0f; text-decoration: none; font-weight: bold; }
 a:hover { text-decoration: underline; }
 
 /* Intestazioni */
-h1, h2, h3 { color: #bc0f0f; margin-top: 1.5em; font-family: 'Merriweather', serif; }
-h1 { border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; font-size: 2.5em; }
-h2 { border-bottom: 1px solid #e0e0e0; font-size: 1.8em; }
+h1, h2, h3, h4 {
+    /* Domine dà quel tocco "Fantasy Classico" ai titoli */
+    font-family: 'Domine', serif;
+    color: #822000; /* Rosso "Manuale" un po' più acceso */
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2.5em;
+    border-bottom: 2px solid #dcdcdc;
+    margin-top: 1em;
+}
+
+h2 {
+    font-size: 2em;
+    border-bottom: 1px solid #dcdcdc;
+}
 
 /* Tabelle (stile pulito) */
 table { width: 100%; border-collapse: collapse; margin: 20px 0; }
@@ -47,8 +65,9 @@ pre, code { background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; fon
     padding: 15px 20px;
     margin: 25px 0;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-    font-family: 'Merriweather', serif; /* Font con grazie per la lettura */
+    font-family: 'Lora', serif;
     font-style: italic;
+    font-size: 1.05em;
     color: #2b3b35;
 }
 
@@ -107,22 +126,21 @@ pre, code { background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; fon
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
     padding: 20px;
     margin: 30px 0;
-    font-family: 'Segoe UI', Helvetica, sans-serif; /* Font pulito per le stat */
-    font-size: 0.9em;
+    font-family: 'Roboto Condensed', 'Segoe UI', sans-serif;
+    font-size: 15px; /* Un po' più piccolo per far stare tutto */
     color: #58180D; /* Rosso scuro quasi nero */
     display: block; /* Assicura che prenda spazio */
     page-break-inside: avoid; /* Evita che si spezzi tra due pagine in stampa */
+    
 }
 
 /* Il nome del Mostro */
 .monster h3 {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-variant: small-caps; /* Maiuscoletto elegante */
-    font-weight: bold;
+    font-family: 'Domine', serif;
     font-size: 1.8em;
     color: #58180D;
-    margin: 0 0 5px 0;
-    border-bottom: none; /* Rimuoviamo il bordo standard */
+    letter-spacing: 1px;
+    font-variant: small-caps; /* Maiuscoletto elegante */
 }
 
 /* --- STILE PER LE STATISTICHE DEI MOSTRI --- */
