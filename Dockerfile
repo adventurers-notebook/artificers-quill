@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /usr/local/share/fonts/truetype/dnd
 
 # Download and unzip the fonts from the rpgtex repository
-RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/master/fonts/fonts.zip -O /tmp/fonts.zip && \
-    unzip /tmp/fonts.zip -d /usr/local/share/fonts/truetype/dnd && \
-    rm /tmp/fonts.zip
+#RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/master/fonts/fonts.zip -O /tmp/fonts.zip && \
+#    unzip /tmp/fonts.zip -d /usr/local/share/fonts/truetype/dnd && \
+#    rm /tmp/fonts.zip
 
 # Refresh the font cache
 RUN fc-cache -f -v
@@ -32,8 +32,8 @@ RUN fc-cache -f -v
 RUN mkdir -p /usr/share/texmf/tex/latex/dnd5e
 
 # Download the style file and images
-RUN wget https://raw.githubusercontent.com/rpgtex/DND-5e-LaTeX-Template/master/dnd.sty -O /usr/share/texmf/tex/latex/dnd5e/dnd.sty && \
-    wget https://raw.githubusercontent.com/rpgtex/DND-5e-LaTeX-Template/master/backgrounds/PHB-background.png -O /usr/share/texmf/tex/latex/dnd5e/PHB-background.png
+RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/refs/heads/stable/dnd.sty -O /usr/share/texmf/tex/latex/dnd5e/dnd.sty && \
+    wget https://github.com/rpgtex/DND-5e-LaTeX-Template/raw/refs/heads/stable/img/paper.jpg -O /usr/share/texmf/tex/latex/dnd5e/PHB-background.png
 
 # Refresh the TeX file database
 RUN texhash
