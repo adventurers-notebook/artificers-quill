@@ -28,14 +28,10 @@ RUN wget https://github.com/rpgtex/DND-5e-LaTeX-Template/archive/refs/heads/stab
 # Refresh the font cache
 RUN fc-cache -f -v
 
-# --- Install D&D 5e LaTeX Template ---
-# Create a directory for the LaTeX style files in the TeX tree
-RUN mkdir -p /usr/share/texmf/tex/latex/dnd5e
-
 # Refresh the TeX file database
 RUN texhash
 
-COPY adventure.md dnd_pro.lua build.sh .
+COPY adventure.md dnd.sty dndbook.cls dndoptions.clo header.tex dnd_pro.lua build.sh .
 
 RUN chmod a+x build.sh
 

@@ -1,0 +1,59 @@
+\usepackage[utf8]{inputenc}
+\usepackage{tcolorbox}
+
+% Define colors (D&D 5e style approximations)
+\definecolor{phb-tan}{HTML}{FDF1DC}
+\definecolor{phb-green}{HTML}{E0E5C1}
+\definecolor{comment-blue}{HTML}{E0E5C1} 
+
+% 1. Define READALOUD
+\newtcolorbox{readaloud}{
+  colback=phb-tan,
+  colframe=black,
+  boxrule=1pt,
+  arc=0pt,
+  left=10pt, right=10pt, top=10pt, bottom=10pt,
+  fontupper=\itshape
+}
+
+% 2. Define PAPERBOX (Standard sidebar)
+\newtcolorbox{paperbox}[1]{
+  colback=phb-tan,
+  colframe=black,
+  title=#1,
+  fonttitle=\bfseries\Large,
+  sharp corners
+}
+
+% 3. Define COMMENTBOX
+\newtcolorbox{commentbox}[1]{
+  colback=comment-blue,
+  colframe=black,
+  title=#1,
+  fonttitle=\bfseries
+}
+
+% 4. Define MONSTERBOX
+% (Simplified version for compatibility with your script)
+\newenvironment{monsterbox}[1]{
+  \begin{tcolorbox}[colback=phb-tan, colframe=black, title=#1, fonttitle=\bfseries\Large]
+}{
+  \end{tcolorbox}
+}
+
+% Definition for the Spell Box
+\newtcolorbox{spell}[1]{
+  colback=white,
+  colframe=black!70,
+  colbacktitle=white,
+  coltitle=black,
+  fonttitle=\bfseries\Large,
+  title={#1},
+  boxrule=0.5pt,
+  arc=0pt,
+  outer arc=0pt,
+  attach title to upper,
+  after title={\par\medskip},
+  before skip=10pt,
+  after skip=10pt
+}

@@ -1,7 +1,3 @@
 #!/bin/sh
 
-pandoc $1 \
-  --from markdown+yaml_metadata_block \
-  --lua-filter=dnd_pro.lua \
-  --pdf-engine=xelatex \
-  -o adventure.pdf
+pandoc $1 -o adventure.pdf --lua-filter=dnd_pro.lua -H header.tex --pdf-engine=xelatex
