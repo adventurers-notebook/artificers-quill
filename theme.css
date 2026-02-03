@@ -36,3 +36,63 @@ blockquote {
 
 /* Codice e blocchi tecnici */
 pre, code { background-color: #f0f0f0; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+
+/* --- BOX SPECIALI D&D --- */
+
+/* 1. READ ALOUD (Testo da leggere) 
+   Stile: Sfondo verdino/teal, cornice scura, font italico */
+.readaloud {
+    background-color: #E0E5C1; /* Quel verdino classico */
+    border: 1px solid #6c7b74;
+    padding: 15px 20px;
+    margin: 25px 0;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    font-family: 'Merriweather', serif; /* Font con grazie per la lettura */
+    font-style: italic;
+    color: #2b3b35;
+}
+
+/* Titolo dentro il Read Aloud */
+.readaloud h3, .readaloud h4 {
+    margin-top: 0;
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: 1em;
+    color: #2b3b35;
+    border-bottom: 1px solid #6c7b74;
+    padding-bottom: 5px;
+}
+
+/* 2. PAPER BOX (Pergamena)
+   Stile: Sfondo giallino carta antica, per mostri o oggetti */
+.paperbox {
+    background-color: #FDF1DC; /* Colore pergamena */
+    border: 1px solid #d8c385; /* Oro scuro */
+    padding: 15px;
+    margin: 25px 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.paperbox h3, .paperbox h4 {
+    margin-top: 0;
+    color: #58180D; /* Rosso scuro sangue */
+    border-bottom: 2px solid #c9ad6a; /* Oro D&D */
+}
+
+/* 3. COMMENT BOX (Note del DM)
+   Stile: Blu o Grigio moderno, stile "Sidebar" */
+.commentbox {
+    background-color: #f0f4f8; /* Grigio-Bluastro molto chiaro */
+    border-left: 5px solid #3b6063; /* Bordo spesso a sinistra */
+    padding: 10px 20px;
+    margin: 20px 0;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.commentbox h3, .commentbox h4 {
+    color: #3b6063;
+    margin-top: 0;
+    font-size: 1.1em;
+    border: none;
+}

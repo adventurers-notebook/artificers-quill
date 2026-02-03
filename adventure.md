@@ -21,11 +21,11 @@ L'aria è pesante e odora di ozono. Davanti a voi, un portale di pietra nera pul
 
 Prima di entrare, il Dungeon Master dovrebbe tenere a mente le seguenti regole speciali per questo dungeon.
 
-::: {paperbox title="Regola Casalinga: Magia Instabile"}
+::: {.paperbox title="Regola Casalinga: Magia Instabile"}
 In questo dungeon, ogni volta che un incantatore lancia una magia di livello 1 o superiore, deve tirare un d20. Se il risultato è 1, accade un effetto di **Magia Selvaggia**.
 :::
 
-::: {commentbox title="Nota per il DM"}
+::: {.commentbox title="Nota per il DM"}
 Se i giocatori decidono di forzare la porta fisica invece di risolvere l'enigma, la CD per sfondarla è 25 (Forza). Se falliscono di 5 o più, attivano la trappola.
 :::
 
@@ -33,7 +33,7 @@ Se i giocatori decidono di forzare la porta fisica invece di risolvere l'enigma,
 
 Se i giocatori sbagliano l'enigma, le rune si staccano dalla porta e formano un golem fatto di pura sintassi errata.
 
-::: {monster name="Golem di Sintassi"}
+::: {.monster name="Golem di Sintassi"}
 *Medium construct, unaligned*
 ___
 Hit Points 50 (10d8 + 5)
