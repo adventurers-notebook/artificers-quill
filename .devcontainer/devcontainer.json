@@ -1,0 +1,16 @@
+{
+    "name": "D&D Markdown Studio",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "yzhang.markdown-all-in-one",
+                "james-yu.latex-workshop",
+                "vscode-pandoc"
+            ]
+        }
+    },
+    "remoteUser": "vscode"
+}
